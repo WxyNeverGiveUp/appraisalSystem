@@ -1,2 +1,2 @@
 # appraisalSystem
-是一个考核管理系统哦！
+绩效管理系统
