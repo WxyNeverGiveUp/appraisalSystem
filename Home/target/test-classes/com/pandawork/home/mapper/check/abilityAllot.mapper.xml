@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityAllotMapper">
+
+    <select id="generalCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND(
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 9)
+         OR
+         ((SELECT tp.power FROM t_power tp WHERE(tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 8)
+        )AND tu.did = #{did}
+    </select>
+
+    <select id="deputyCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND(
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 9)
+         OR
+         ((SELECT tp.power FROM t_power tp WHERE(tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 7)
+        )AND tu.did = #{did}
+    </select>
+
+    <select id="dManagerCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND (
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 9)
+         OR
+         ((SELECT tp.power FROM t_power tp WHERE(tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 8)
+        )AND tu.did = #{did}
+    </select>
+
+    <select id="topManagerCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND(
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 7)
+         OR
+         ((SELECT tp.power FROM t_power tp WHERE(tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 6)
+        )
+    </select>
+
+
+    <select id="deputyManagerCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND (tu.did IN
+        <foreach collection="dids" open="(" separator="," close=")" item="did">
+            #{did}
+        </foreach>)
+    </select>
+
+    <select id="queryByUid" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND tu.id = #{uid}
+    </select>
+
+    <select id="queryGeneralByDid" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 9)
+        AND tu.did = #{did}
+    </select>
+
+    <select id="queryDeputyByDid" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 8)
+        AND tu.did = #{did}
+    </select>
+
+    <select id="queryManageByDid" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 7)
+        AND (tu.did IN
+        <foreach collection="dids" open="(" separator="," close=")" item="did">
+            #{did}
+        </foreach>)
+    </select>
+
+    <select id="queryDeputyManagerCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND
+        ((SELECT tp.power FROM t_power tp WHERE
+        (tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 6)
+    </select>
+
+    <select id="queryByTopManagerCheck" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND
+        ((SELECT tp.power FROM t_power tp WHERE(tp.id = (SELECT tr.pid FROM  t_role tr WHERE tr.id = tu.rid))) = 6)
+    </select>
+
+
+</mapper>

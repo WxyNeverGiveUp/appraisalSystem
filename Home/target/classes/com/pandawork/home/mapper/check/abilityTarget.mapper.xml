@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityTargetMapper">
+    <insert id="addTarget">
+        INSERT INTO t_ability_target(
+        type_id,
+        name
+        )VALUES (
+        #{abilityTarget.typeId},
+        #{abilityTarget.name}
+        )
+    </insert>
+    <delete id="delTarget">
+        DELETE FROM t_ability_target WHERE id = #{id}
+    </delete>
+
+    <update id="updateTarget">
+        UPDATE t_ability_target SET type_id = #{abilityTarget.typeId},name = #{abilityTarget.name} WHERE id = #{abilityTarget.id}
+    </update>
+
+    <select id="listAll" resultMap="pw.AbilityTarget">
+        SELECT *  FROM t_ability_target
+    </select>
+</mapper>

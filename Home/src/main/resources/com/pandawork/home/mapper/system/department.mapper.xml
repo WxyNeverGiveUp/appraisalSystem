@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pandawork.home.mapper.system.DepartmentMapper">
+    <insert id="addDepartment">
+        INSERT INTO t_department(
+          name
+        )VALUE (
+        #{department.name}
+        )
+    </insert>
+
+    <update id="delDepartment">
+        UPDATE t_department SET is_delete = #{department.isDelete} WHERE id = #{department.id}
+    </update>
+
+    <update id="updateDepartment">
+        update t_department set  name = #{department.name} where id = #{department.id}
+    </update>
+
+    <select id="queryById" resultMap="pw.Department">
+        SELECT * FROM t_department WHERE id = #{id}
+    </select>
+
+    <select id="queryByName" resultMap="pw.Department">
+        SELECT * FROM t_department WHERE name = #{name}
+    </select>
+
+    <select id="queryByIsDelete" resultMap="pw.Department">
+        select * from t_department WHERE is_delete = #{isDelete}
+    </select>
+    
+    <select id="listAll" resultMap="pw.Department">
+        select * from t_department ORDER BY id DESC
+    </select>
+
+    <select id="queryId" resultMap="pw.Department">
+        SELECT id FROM t_department
+    </select>
+</mapper>

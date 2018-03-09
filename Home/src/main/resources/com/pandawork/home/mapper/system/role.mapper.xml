@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.system.RoleMapper">
+
+    <insert id="addRole">
+        INSERT INTO t_role(
+        name,pid
+        )VALUES (
+        #{role.name},#{role.pid}
+        )
+    </insert>
+
+    <update id="delRole">
+        UPDATE t_role SET is_delete = 0 WHERE id = #{role.id}
+    </update>
+
+    <update id="updateRole">
+        UPDATE t_role SET name = #{role.name},pid = #{role.pid} WHERE id = #{role.id}
+    </update>
+
+    <select id="listAll" resultMap="pw.Role">
+        SELECT * FROM t_role ORDER BY id DESC
+    </select>
+
+    <select id="queryById" resultMap="pw.Role">
+        SELECT * FROM t_role WHERE id = #{id}
+    </select>
+
+    <select id="queryByName" resultMap="pw.Role">
+        SELECT * FROM t_role WHERE name = #{name}
+    </select>
+
+    <select id="queryByIsDelete" resultMap="pw.Role">
+        SELECT * FROM t_role WHERE is_delete = #{isDelete}
+    </select>
+
+</mapper>

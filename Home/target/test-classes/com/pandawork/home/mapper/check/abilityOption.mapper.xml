@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityOptionMapper">
+    <insert id="addOption">
+        INSERT INTO t_ability_option(
+          position_id,
+          target_id,
+          option_name,
+          max_score,
+          min_score,
+          option_content,
+          test_id
+        )VALUES (
+        #{abilityOption.positionId},
+        #{abilityOption.targetId},
+        #{abilityOption.optionName},
+        #{abilityOption.maxScore},
+        #{abilityOption.minScore},
+        #{abilityOption.optionContent},
+        #{abilityOption.testId}
+        )
+    </insert>
+    <delete id="delOption">
+        DELETE FROM t_ability_option WHERE id = #{id}
+    </delete>
+
+    <update id="updateOption">
+        UPDATE t_ability_option SET
+        position_id = #{abilityOption.positionId},
+        target_id = #{abilityOption.targetId},
+        option_name = #{abilityOption.optionName},
+        max_score = #{abilityOption.maxScore},
+        min_score = #{abilityOption.minScore},
+        option_content = #{abilityOption.optionContent}
+        WHERE id = #{abilityOption.id}
+    </update>
+
+    <select id="queryByPositionId" resultMap="pw.AbilityOption">
+      SELECT * FROM t_ability_option WHERE position_id = #{positionId}
+    </select>
+    
+    <select id="queryByTestId" resultMap="pw.AbilityOption">
+        SELECT *  FROM t_ability_option WHERE test_id = #{testId}
+    </select>
+
+    <select id="queryByPidAndOption" resultMap="pw.AbilityOption">
+        SELECT * FROM t_ability_option WHERE position_id = #{positionId} AND option_name = #{optionName}
+    </select>
+</mapper>

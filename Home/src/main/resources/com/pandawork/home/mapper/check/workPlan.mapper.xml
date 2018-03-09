@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.WorkPlanMapper">
+    <insert id="addWorkPlan">
+        INSERT INTO t_work_plan(
+        be_check_id,
+        year,
+        month,
+        queater,
+        test_id
+        )VALUES (
+        #{workPlan.beCheckId},
+        #{workPlan.year},
+        #{workPlan.month},
+        #{workPlan.queater},
+        #{workPlan.testId}
+        )
+    </insert>
+
+    <update id="updateWorkPlan">
+        UPDATE t_work_plan SET month_score = #{workPlan.monthScore},
+        queater_score = #{workPlan.queaterScore} WHERE id = #{workPlan.id}
+    </update>
+
+    <select id="listAll" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan
+    </select>
+
+    <select id="queryByUid" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE be_check_id = #{uid}
+    </select>
+
+    <select id="queryByTestId" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE test_id = #{testId}
+    </select>
+
+    <select id="queryById" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE id = #{id}
+    </select>
+
+    <select id="queryByTidAndUid" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE be_check_id = #{beCheckId} AND test_id = #{testId}
+    </select>
+
+    <select id="queryByUidAndYear" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE `be_check_id` = #{beCheckId} AND `year` = #{year}
+    </select>
+
+    <select id="queryByYear" resultMap="pw.WorkPlan">
+        SELECT * FROM t_work_plan WHERE year = #{year}
+    </select>
+
+    <delete id="delWorkPlan">
+        DELETE FROM t_work_plan WHERE be_check_id = #{beCheckId} AND test_id = #{testId}
+    </delete>
+</mapper>

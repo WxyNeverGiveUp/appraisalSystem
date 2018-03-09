@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pandawork.home.mapper.system.PowerMapper">
+
+    <insert id="addPower">
+        INSERT INTO t_power(
+        power,detail
+        )VALUE (
+        #{power.power},#{power.detail}
+        )
+    </insert>
+
+    <delete id="delPower">
+        DELETE FROM t_power WHERE id = #{id}
+    </delete>
+
+
+    <update id="updatePower" >
+        UPDATE t_power SET power = #{power.power},detail = #{power.detail} WHERE id = #{power.id}
+    </update>
+
+    <select id="queryById" resultMap="pw.Power">
+        SELECT * FROM t_power WHERE id = #{id}
+    </select>
+
+    <select id="queryByPower" resultMap="pw.Power">
+        SELECT * FROM t_power WHERE power = #{power}
+    </select>
+
+    <select id="listAll" resultMap="pw.Power">
+        SELECT *FROM t_power
+    </select>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityPositionMapper">
+
+    <insert id="addPosition">
+        INSERT INTO t_ability_position(
+          target_id,weight,test_id,target_type_id
+        )VALUES (
+        #{abilityPosition.targetId},
+        #{abilityPosition.weight},
+        #{abilityPosition.testId},
+        #{abilityPosition.targetTypeId}
+        )
+    </insert>
+
+    <update id="delPosition">
+        UPDATE t_ability_position SET is_available = #{abilityPosition.isAvailable} WHERE id = #{abilityPosition.id}
+    </update>
+
+    <update id="updatePosition">
+         UPDATE t_ability_position SET
+         target_id = #{abilityPosition.targetId},
+         target_type_id = #{abilityPosition.targetTypeId},
+         weight = #{abilityPosition.weight}
+         WHERE id = #{abilityPosition.id}
+    </update>
+
+    <select id="queryByDid" resultMap="pw.AbilityPosition">
+        SELECT * FROM t_ability_position WHERE did = #{did}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT (1) FROM t_ability_position
+    </select>
+
+    <select id="queryByTestId" resultMap="pw.AbilityPosition">
+        SELECT * FROM t_ability_position WHERE test_id = #{testId}
+    </select>
+
+    <select id="queryById" resultMap="pw.AbilityPosition">
+        SELECT * FROM t_ability_position WHERE id = #{id}
+    </select>
+    <delete id="del">
+        DELETE FROM t_ability_position WHERE id =#{id}
+    </delete>
+
+    <select id="queryByCondition" resultMap="pw.AbilityPosition">
+        SELECT * FROM t_ability_position WHERE target_id = #{abilityPosition.targetId} AND
+         target_type_id = #{abilityPosition.targetTypeId} AND
+         weight = #{abilityPosition.weight}
+    </select>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.PerformanceMapper">
+    <insert id="addPerformance">
+        INSERT INTO t_performance(
+          be_check_id,
+          year
+        )VALUES (
+        #{performance.beCheckId},
+        #{performance.year}
+        )
+    </insert>
+
+    <update id="updateSummaryScore">
+        UPDATE t_performance SET summary_score = #{performance.summaryScore} WHERE be_check_id = #{performance.beCheckId}
+    </update>
+
+    <update id="updateYearScore">
+        UPDATE t_performance SET
+        year_score = #{performance.yearScore},
+        suggest_score = #{performance.suggestScore},
+        is_join = 1
+        WHERE id = #{performance.id}
+    </update>
+
+    <delete id="delPerformance">
+        DELETE FROM t_performance WHERE id = #{id}
+    </delete>
+
+    <select id="queryByYearAndMonth" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE year = #{year} AND month = #{month}
+    </select>
+
+    <select id="queryByYearAndQueater" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE year = #{year} AND queater = #{queater}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(1) FROM t_performance
+    </select>
+
+    <select id="queryByDid" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE did = #{did}
+    </select>
+
+    <select id="queryByUid" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE be_check_id = #{beCheckId}
+    </select>
+
+    <select id="queryYearByUid" resultMap="pw.Performance">
+        SELECT DISTINCT year FROM t_performance WHERE be_check_id = #{beCheckId} ORDER BY year DESC
+    </select>
+
+    <select id="listAll" resultMap="pw.Performance">
+        select * from t_performance
+    </select>
+
+    <select id="queryByUidAndYear" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE be_check_id = #{beCheckId} AND year = #{year}
+    </select>
+
+    <select id="queryByYear" resultMap="pw.Performance">
+        SELECT * FROM t_performance WHERE year = #{year}
+    </select>
+
+</mapper>

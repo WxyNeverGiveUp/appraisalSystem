@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityTestMapper">
+
+    <insert id="addAbilityTest">
+        INSERT INTO t_ability_test(
+        test_id,be_check_id
+        )VALUES (
+        #{abilityTest.testId},
+        #{abilityTest.beCheckId}
+        )
+    </insert>
+
+    <update id="updateScore">
+        UPDATE t_ability_test SET check_id = #{abilityTest.checkId},
+          score = #{abilityTest.score},
+          is_join = 1
+          WHERE id = #{abilityTest.id}
+    </update>
+
+    <delete id="delByTidAndUid">
+        DELETE FROM t_ability_test WHERE test_id = #{testId} AND be_check_id = #{beCheckId}
+    </delete>
+
+    <select id="queryByTestIdAndUid" resultMap="pw.AbilityTest">
+        SELECT * FROM t_ability_test WHERE test_id = #{testId} AND check_id = #{CheckId}
+    </select>
+
+    <select id="queryByTidAndUid" resultMap="pw.AbilityTest">
+        SELECT * FROM t_ability_test WHERE test_id = #{tid} AND be_check_id = #{uid}
+    </select>
+
+    <select id="queryByTid" resultMap="pw.AbilityTest">
+        SELECT * FROM t_ability_test WHERE test_id = #{tid}
+    </select>
+
+</mapper>

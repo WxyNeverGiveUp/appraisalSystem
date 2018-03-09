@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.JoinTestMapper">
+    <insert id="addCheck">
+        INSERT INTO t_join_test(
+        test_id,
+        uid
+        )VALUES (
+        #{joinTest.testId},
+        #{joinTest.uid}
+        )
+    </insert>
+
+    <delete id="delById">
+        DELETE FROM t_join_test WHERE test_id = #{tid} AND  uid = #{uid}
+    </delete>
+
+    <select id="queryById" resultMap="pw.JoinTest">
+        select * from t_join_test WHERE id = #{id}
+    </select>
+    
+    <select id="queryByUid" resultMap="pw.JoinTest">
+        SELECT * FROM t_join_test WHERE uid = #{uid}
+    </select>
+
+    <select id="queryByTid" resultMap="pw.JoinTest">
+        SELECT * FROM t_join_test WHERE test_id = #{testId}
+    </select>
+
+    <select id="queryByUidAndTid" resultMap="pw.JoinTest">
+        SELECT * FROM t_join_test WHERE uid = #{uid} AND test_id = #{tid}
+    </select>
+
+
+    <select id="listAll" resultMap="pw.JoinTest">
+        SELECT * FROM t_join_test
+    </select>
+
+    <update id="isJoin">
+        UPDATE t_join_test SET is_join = #{joinTest.isJoin} WHERE id  = #{joinTest.id}
+    </update>
+</mapper>

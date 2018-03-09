@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>考核计划管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- select2 -->
+  <link rel="stylesheet" href="../../../resources/js/bower_components/select2/dist/css/select2.min.css">
+  <!--#include file="/ssm-check/Home/src/main/webapp/WEB-INF/view/common/link.html" -->
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../../resources/js/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+</head>
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
+
+  <!--#include file="/ssm-check/Home/src/main/webapp/WEB-INF/view/common/header.html" -->
+  
+  <!--#include file="/ssm-check/Home/src/main/webapp/WEB-INF/view/common/sidebar.html" -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        考核计划管理
+        <small>栏目</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">考核管理</a></li>
+        <li class="active">考核计划管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-success">
+            <div class="box-header">
+              <h3 class="box-title">考核计划</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>考核计划名称</th>
+                      <th>考核性质</th>
+                      <th>考核开始时间</th>
+                      <th>考核结束时间</th>
+                      <th>是否开启</th>
+                      <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-id="1">
+                        <td>1</td>
+                        <td class="name-text">2月考核计划</td>
+                        <td class="nature-text">月度考核</td>
+                        <td class="time-start-text">经理</td>
+                        <td class="time-end-text">经理</td>
+                        <td class="status-text">已开启</td>
+                        <td>
+                            <button type="button" class="btn bg-olive change" data-toggle="modal" data-target="#modal-default" data-num="1">修改计划</button>
+                            <a href="allot-detail.html" class="btn bg-blue">考核分配</a>
+                            <a class="btn btn-warning status" href="javascript:;" data-num="1">改变状态</a>
+                            <button type="button" class="btn bg-red delete" data-num="1">删除</button>
+                        </td>
+                    </tr>
+                    <tr data-id="2">
+                        <td>2</td>
+                        <td class="name-text">2月考核计划</td>
+                        <td class="nature-text">月度考核</td>
+                        <td class="time-start-text">经理</td>
+                        <td class="time-end-text">经理</td>
+                        <td class="status-text">未关闭</td>
+                        <td>
+                            <button type="button" class="btn bg-olive change" data-toggle="modal" data-target="#modal-default" data-num="2">修改计划</button>
+                            <a href="allot-detail.html" class="btn bg-blue">考核分配</a>
+                            <a class="btn btn-warning status" href="javascript:;" data-num="2">改变状态</a>
+                            <button type="button" class="btn bg-red delete" data-num="2">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                      <th>序号</th>
+                      <th>考核计划名称</th>
+                      <th>考核性质</th>
+                      <th>考核开始时间</th>
+                      <th>考核结束时间</th>
+                      <th>是否开启</th>
+                      <th>操作</th>
+                    </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <a href="plan-management-add.html" class="btn bg-olive">添加计划</a>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!--#include file="/ssm-check/Home/src/main/webapp/WEB-INF/view/common/header.html" -->
+  
+  <div class="control-sidebar-bg"></div>
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">修改计划</h4>
+        </div>
+        <div class="modal-body">
+          <!-- 获取隐藏的点击按钮的次序 -->
+          <input type="hidden" id="dataId">
+          <div class="form-group">
+              <label>考核计划名称：</label>
+              <input type="text" class="form-control name a-require-text" placeholder="请输入..." name="role">
+          </div>
+          
+          <div class="form-group">
+            <label>考核性质：</label>
+            <select class="form-control nature a-require-option">
+              <option value="-1">请选择</option>
+              <option value="1">月度考核</option>
+              <option value="2">年度考核</option>
+            </select>
+          </div>
+          
+          <!-- <div class="form-group">
+            <label>选择对象：</label>
+            <select class="form-control select2 position a-require-options" multiple="multiple" data-placeholder="请选择..." style="width: 100%;">
+              <option value="1">对象1</option>
+              <option value="2">对象2</option>
+            </select>
+          </div> -->
+
+          <div class="form-group">
+            <label>选择时间:</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" id="reservation">
+            </div>
+          </div>
+
+          <!-- <div class="form-group none kind">
+            <label>考核方式：</label>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" checked="checked" name="kind">
+                工作计划考核
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox">
+                绩效指标考核
+              </label>
+            </div>
+          </div> -->
+          
+          <p class="text-red tip"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary J-ajax-submit">保存修改</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
+<!-- ./wrapper -->
+
+<!--#include file="/ssm-check/Home/src/main/webapp/WEB-INF/view/common/script.html" -->
+<!-- select2 -->
+<script src="../../../resources/js/bower_components/select2/dist/js/select2.full.js"></script>
+<script src="../../../resources/js/pages/common/verify.js"></script>
+<!-- date-range-picker -->
+<script src="../../../resources/js/bower_components/moment/min/moment-with-locales.js"></script>
+<script src="../../../resources/js/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<script src="../../../resources/js/pages/evaluation/plan-management.js"></script>
+<!-- page script -->
+<script>
+  function init() {
+    $('#example1').DataTable();
+    $('.select2').select2();
+          //定义locale汉化插件
+          var locale = {
+              "format": 'YYYY-MM-DD',
+              "separator": " 到 ",
+              "applyLabel": "确定",
+              "cancelLabel": "取消",
+              "fromLabel": "起始时间",
+              "toLabel": "结束时间'",
+              "customRangeLabel": "自定义",
+              "weekLabel": "W",
+              "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+              "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+              "firstDay": 1
+          };
+          //初始化显示当前时间
+          $('#reservation span').html(moment().subtract('hours', 1).format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+          //日期控件初始化
+          $('#reservation').daterangepicker(
+              {
+                  'locale': locale,
+                  //汉化按钮部分
+                  startDate: moment().subtract(29, 'days'),
+                  endDate: moment()
+              },
+              function (start, end) {
+                  $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+              }
+         );
+      };
+      $(document).ready(function() {
+          init(); 
+      });
+</script>
+</body>
+</html>

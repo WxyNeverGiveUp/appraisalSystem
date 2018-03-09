@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pandawork.home.mapper.query.YearMonthMapper">
+    <select id="listAll" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9 AND twp.be_check_id = tjt.uid)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2
+    </select>
+
+    <select id="queryByDid" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9 AND twp.be_check_id = tjt.uid)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2 AND (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid) = #{did}
+    </select>
+
+    <select id="queryByUid" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9 AND twp.be_check_id = tjt.uid)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2 AND tjt.uid = #{uid}
+    </select>
+
+
+    <select id="queryByAllot" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9 AND twp.be_check_id = tjt.uid)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2 AND (SELECT did FROM t_user tu WHERE tu.id = tjt.uid) IN
+        <foreach collection="dids" item="did" index="index" open="(" separator="," close=")">
+            #{did}
+        </foreach>
+    </select>
+
+
+    <select id="queryByConditions" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+
+        <where>
+            <if test="1==1">
+                AND (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2
+            </if>
+            <if test="did > 0">
+                AND (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid) = #{did}
+            </if>
+            <if test="rid > 0">
+                AND (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid) = #{rid}
+            </if>
+            <if test="year > 0">
+                AND (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = #{year}
+            </if>
+            <if test="username != '' and username != null">
+                AND (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid) = #{username}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryByUidAndYear" resultType="YearMonthExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 5 AND twp.be_check_id = tjt.uid)AS month5,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 6 AND twp.be_check_id = tjt.uid)AS month6,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 7 AND twp.be_check_id = tjt.uid)AS month7,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 8 AND twp.be_check_id = tjt.uid)AS month8,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 9 AND twp.be_check_id = tjt.uid)AS month9,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 10 AND twp.be_check_id = tjt.uid)AS month10,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 11 AND twp.be_check_id = tjt.uid)AS month11,
+        (SELECT twp.month_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.month = 12 AND twp.be_check_id = tjt.uid)AS month12,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 2 AND tjt.uid = #{uid} AND (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = #{year}
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.WorkDetailMapper">
+    <insert id="addWorkDetail">
+        INSERT INTO t_work_detail(
+          wid,start_time,end_time,plan_content,except_result,weight,uid
+        )VALUES (
+        #{workDetail.wid},#{workDetail.startTime},#{workDetail.endTime},
+        #{workDetail.planContent},#{workDetail.expectResult},#{workDetail.weight},#{workDetail.uid}
+        )
+    </insert>
+
+    <update id="updateWorkDetail">
+        UPDATE t_work_detail SET
+        wid = #{workDetail.wid},
+        start_time = #{workDetail.startTime},
+        end_time = #{workDetail.endTime},
+        plan_content = #{workDetail.planContent},
+        except_result = #{workDetail.expectResult},
+        weight = #{workDetail.weight}
+        WHERE id = #{workDetail.id}
+    </update>
+
+    <update id="addWorkCompletion">
+      UPDATE t_work_detail SET work_completion = #{workDetail.workCompletion}
+        WHERE id = #{workDetail.id}
+    </update>
+
+    <update id="marking">
+        UPDATE t_work_detail SET
+        completion = #{workDetail.completion},
+        test_score = #{workDetail.testScore},
+        is_join = #{workDetail.isJoin}
+        WHERE id = #{workDetail.id}
+    </update>
+    <select id="queryByWId" resultMap="pw.WorkDetail">
+        SELECT * FROM t_work_detail WHERE wid = #{wid}
+    </select>
+
+    <delete id="delWorkDetail">
+        DELETE FROM t_work_detail WHERE id = #{id}
+    </delete>
+
+    <select id="queryById" resultMap="pw.WorkDetail">
+        SELECT * FROM t_work_detail WHERE id = #{id}
+    </select>
+
+    <select id="queryByUidAndWid" resultMap="pw.WorkDetail">
+        SELECT * FROM t_work_detail WHERE uid = #{uid} AND wid = #{wid}
+    </select>
+</mapper>

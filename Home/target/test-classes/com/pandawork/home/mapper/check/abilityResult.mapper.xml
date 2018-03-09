@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityResultMapper">
+    <insert id="addResult">
+        INSERT INTO t_ability_result(
+        be_check_id,
+        check_id,
+        rid,
+        year,
+        did,
+        total_score,
+        finish_time,
+        test_id
+        )VALUES (
+        #{abilityResult.beCheckId},
+        #{abilityResult.checkId},
+        #{abilityResult.rid},
+        #{abilityResult.year},
+        #{abilityResult.did},
+        #{abilityResult.totalScore},
+        #{abilityResult.finishTime},
+        #{abilityResult.testId}
+        )
+    </insert>
+
+    <update id="updateResult">
+        UPDATE t_ability_result SET
+        total_score = #{abilityResult.totalScore},
+        is_join = #{abilityResult.isJoin}
+        WHERE id = #{abilityResult.id}
+    </update>
+
+    <delete id="delResult">
+        DELETE FROM t_ability_result WHERE id = #{id}
+    </delete>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(1) FROM t_ability_result
+    </select>
+
+    <select id="queryByDid" resultMap="pw.AbilityResult">
+        SELECT * FROM t_ability_result WHERE did = #{did}
+    </select>
+
+    <select id="listAll" resultMap="pw.AbilityResult">
+        SELECT * FROM t_ability_result
+    </select>
+
+    <select id="queryByTidAndUid" resultMap="pw.AbilityResult">
+        SELECT * FROM t_ability_result WHERE test_id = #{testId} AND be_check_id = #{uid}
+    </select>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.TestPlanMapper">
+
+    <insert id="addTestPlan">
+        INSERT INTO t_test_plan(
+        uid,
+        test_type_id,
+        start_time,
+        finish_time,
+        test_name,
+        did,
+        year,
+        month,
+        queater
+        )VALUES (
+        #{testPlan.uid},
+        #{testPlan.testTypeId},
+        #{testPlan.startTime},
+        #{testPlan.finishTime},
+        #{testPlan.testName},
+        #{testPlan.did},
+        #{testPlan.year},
+        #{testPlan.month},
+        #{testPlan.queater}
+        )
+    </insert>
+
+    <update id="updateTestPlan">
+        UPDATE t_test_plan SET
+        uid = #{testPlan.uid},
+        test_type_id = #{testPlan.testTypeId},
+        start_time = #{testPlan.startTime},
+        finish_time = #{testPlan.finishTime},
+        test_name = #{testPlan.testName},
+        did = #{testPlan.did},
+        year = #{testPlan.year}
+        WHERE id = #{testPlan.id}
+    </update>
+
+    <update id="delTestPlan">
+        UPDATE t_test_plan SET
+        is_available = #{testPlan.isAvailable}
+        WHERE id = #{testPlan.id}
+    </update>
+
+    <select id="queryById" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan WHERE id = #{id}
+    </select>
+
+    <select id="listAll" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan ORDER BY id DESC
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(1) FROM t_test_plan
+    </select>
+
+    <select id="queryByDid" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan WHERE did = #{did} ORDER BY id DESC
+    </select>
+
+    <select id="queryByUid" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan WHERE uid = #{uid} ORDER BY id DESC
+    </select>
+
+    <select id="queryByUidAndTypeId" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan WHERE uid = #{uid} AND test_type_id = #{testTypeId} ORDER BY id DESC
+    </select>
+
+    <select id="queryByTypeId" resultMap="pw.TestPlan">
+        SELECT * FROM t_test_plan WHERE test_type_id = #{testTypeId} ORDER BY id DESC
+    </select>
+    
+    <select id="listAllUser" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role,
+        tu.phone AS phone,
+        tu.status AS status,
+        (SELECT tp.power FROM t_power tp WHERE tp.id = (SELECT tr.pid FROM t_role tr WHERE tr.id = tu.rid))AS power
+        FROM t_user tu
+        WHERE tu.is_delete = 1 ORDER BY tu.id DESC
+    </select>
+
+    <select id="queryAllotDaoByDid" resultType="AllotDto">
+        SELECT
+        tu.id AS id,
+        tu.username AS username,
+        tu.real_name AS realName,
+        (SELECT td.name FROM t_department td WHERE td.id = tu.did) AS department,
+        (SELECT tr.name FROM  t_role tr WHERE tr.id = tu.rid)AS role
+        FROM t_user tu
+        WHERE tu.is_delete = 1 AND tu.did = #{did} ORDER BY tu.id DESC
+    </select>
+
+    <delete id="del">
+        DELETE FROM t_test_plan WHERE id = #{id}
+    </delete>
+
+</mapper>

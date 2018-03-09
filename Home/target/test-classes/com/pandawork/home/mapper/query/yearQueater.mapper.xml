@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pandawork.home.mapper.query.YearQueaterMapper">
+    <select id="listAll" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+         WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1
+    </select>
+
+    <select id="queryByDid" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1 AND (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid) = #{did}
+    </select>
+
+    <select id="queryByUid" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1 AND tjt.uid = #{uid}
+    </select>
+
+    <select id="queryByAllot" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1 AND (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid) IN
+        <foreach collection="dids" item="did" index="index" open="(" separator="," close=")">
+            #{did}
+        </foreach>
+    </select>
+
+    <select id="queryDtoByConditions" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore,
+        (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id)AS testType
+        FROM t_join_test tjt
+        <where>
+            <if test="1==1">
+                AND (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1
+            </if>
+            <if test="did > 0">
+                AND (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid) = #{did}
+            </if>
+            <if test="rid > 0">
+                AND (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid) = #{rid}
+            </if>
+            <if test="year > 0">
+                AND (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = #{year}
+            </if>
+            <if test="username != '' and username != null">
+                AND (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid) = #{username}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryByUidAndYear" resultType="YearQueaterExportDto">
+        SELECT
+        tjt.id AS id,
+        (SELECT tu.username FROM t_user tu WHERE tu.id = tjt.uid)AS username,
+        (SELECT tu.real_name FROM t_user tu WHERE tu.id = tjt.uid)AS realName,
+        (SELECT tr.name FROM t_role tr WHERE tr.id = (SELECT tu.rid FROM t_user tu WHERE tu.id = tjt.uid)) AS role,
+        (SELECT td.name FROM t_department td WHERE td.id = (SELECT tu.did FROM t_user tu WHERE tu.id = tjt.uid)) AS department,
+        (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AS year,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 1 AND twp.be_check_id = tjt.uid)AS month1,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 2 AND twp.be_check_id = tjt.uid)AS month2,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 3 AND twp.be_check_id = tjt.uid)AS month3,
+        (SELECT twp.queater_score FROM t_work_plan twp WHERE twp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND twp.queater = 4 AND twp.be_check_id = tjt.uid)AS month4,
+        (SELECT tp.summary_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS summaryScore,
+        (SELECT tar.total_score FROM t_ability_result tar WHERE tar.year =(SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tar.be_check_id = tjt.uid)AS abilityScore,
+        (SELECT tp.year_score FROM t_performance tp WHERE tp.year = (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) AND tp.be_check_id = tjt.uid)AS yearScore
+        FROM t_join_test tjt
+        WHERE (SELECT ttp.test_type_id FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = 1 AND tjt.uid = #{uid}
+        AND (SELECT ttp.year FROM t_test_plan ttp WHERE ttp.id = tjt.test_id) = #{year}
+    </select>
+</mapper>

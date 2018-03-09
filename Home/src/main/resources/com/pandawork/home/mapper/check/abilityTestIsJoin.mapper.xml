@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandawork.home.mapper.check.AbilityTestIsJoinMapper">
+
+    <insert id="addAbilityIsJoin">
+        INSERT INTO t_ability_is_join(
+        tat_id,
+        be_check_id,
+        check_id,
+        test_id,
+        is_join
+        )VALUES (
+        #{abilityTestIsJoin.tatId},
+        #{abilityTestIsJoin.beCheckId},
+        #{abilityTestIsJoin.checkId},
+        #{abilityTestIsJoin.testId},
+        #{abilityTestIsJoin.isJoin}
+        )
+    </insert>
+
+    <select id="queryByTidAndUid" resultMap="pw.AbilityTestIsJoin">
+        SELECT * FROM t_ability_is_join WHERE test_id = #{testId} AND be_check_id = #{uid} AND check_id = #{checkId}
+    </select>
+
+    <select id="queryByTid" resultMap="pw.AbilityTestIsJoin">
+        SELECT * FROM t_ability_is_join WHERE test_id = #{testId}
+    </select>
+</mapper>
